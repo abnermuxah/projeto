@@ -6,3 +6,33 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+
+# mypy
+.mypy_cache/
+
+
+# sftp configuration file
+sftp-config.json
+
+
+# Visual Studio Code #
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
+
+# Personal additions
+__pycache__/
+*.pyc
+__localcode
+venv
+env
+.DS_Store
+local_settings.py
+_local_settings.py
+gunicorn-error-log
+
+static/
