@@ -1,7 +1,7 @@
-import re
 from django.http import HttpResponse
 from django.shortcuts import render
-
+from agende.forms import RegisterForm
+from .forms import RegisterForm
 # Create your views here.
 
 
@@ -10,8 +10,11 @@ def home(request):
 
 
 def cadastro(request):
-    return render(request, 'cadastro.html')
+    form = RegisterForm()  # teste
+    return render(request, 'cadastro.html', {
+        'form': form,
+    })
 
 
 def agendamento(request):
-    return HttpResponse('AGENDAMENTO')
+    return render(request, 'agendamento.html')

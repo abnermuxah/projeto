@@ -24,10 +24,11 @@
           <!-- Email input -->
           <div class="form-outline mb-4">
             <input
-              type="email"
-              id="form3Example3"
+              type="text"
+              id="#"
               class="form-control form-control-lg"
               placeholder="Digite seu CPF"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
             />
           </div>
 
