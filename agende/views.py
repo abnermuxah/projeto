@@ -10,7 +10,7 @@ def home(request):
 
 
 def cadastro(request):
-    return HttpResponse('CADASTRO')
+    return render(request, 'cadastro.html')
 
 
 def agendamento(request):
