@@ -1,14 +1,22 @@
-from atexit import register
-from django.http import HttpResponse, HttpResponseRedirect
+from cmath import log
+from django.template import RequestContext
+from django.core.exceptions import ValidationError
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from agende.forms import RegisterForm
+from agende.forms import RegisterForm, Login
 from .forms import RegisterForm
 import datetime
 # Create your views here.
 
 
 def home(request):
-    return render(request, 'home.html')
+    if request.method == 'POST':
+        login = Login(request.POST)
+        return HttpResponse(login.data['cpf'])
+    else:
+        login = Login()
+
+    return render(request, 'home.html', {'login': login})
 
 
 def cadastro(request):
@@ -20,16 +28,17 @@ def cadastro(request):
         ano_nasc = form.data['data_nasc']
         idade = ano_atual - int(ano_nasc[6:])
 
-        if len(form.data['cpf']) == 11 and idade >= 18:
-            # form.save()
+        if len(form.data['cpf']) == 11 and idade >= 18 and form.data['senha'] == form.data['senha2']:
+            form.save()
+            return HttpResponse('Cadastro efetuado com sucesso!')
 
-            return HttpResponse('Deu certo parça')
-
-        # if form.is_valid():
+        else:
             # return HttpResponse('Cadastro efetuado com sucesso!')
             # return HttpResponse(form.data['cpf'])
+            return HttpResponse('ERRO: CPF Inválido ou Menor de 18 anos ou Senha Inválida')
     else:
         form = RegisterForm()
+
     return render(request, 'cadastro.html', {'form': form})
 
 

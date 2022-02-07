@@ -7,15 +7,15 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
-<form action="" method="post">
-  {% csrf_token %} {{ form }}
-</form>
-
 <div class="text-center text-lg-start mt-4 pt-2">
-  <form action="" method="post">
-    <input type="submit" value="ENTRAR" />
-    </imput>
-    <!--Referencia para cadastro-->
+  <form action="" method="post"> {% csrf_token %}
+    {{ login }}
+    <form action="" method="post">
+      <input type="submit" value="ENTRAR" />
+      </imput>
+      <!--Referencia para cadastro-->
+    </form>
   </form>
+  
   <a href="{% url 'cadastro' %}">Cadastre-se</a>
 </div>

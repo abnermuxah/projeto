@@ -9,6 +9,7 @@ class usuario(models.Model):
     cpf = models.IntegerField(primary_key=True, default=None)
     data_nasc = models.DateField()
     senha = models.CharField(max_length=12, default=None)
+    senha2 = models.CharField(max_length=12, default=None)
 
     def __str__(self):
         return self.nome
