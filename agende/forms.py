@@ -9,3 +9,9 @@ class RegisterForm(forms.ModelForm):
     class Meta:
         model = usuario
         fields = '__all__'
+
+
+class Login(forms.ModelForm):
+    class Meta:
+        model = usuario
+        fields = ['cpf', 'senha']

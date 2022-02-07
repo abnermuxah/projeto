@@ -1,3 +1,4 @@
+from datetime import datetime
 from email.policy import default
 from django.db import models
 from django.http import HttpResponse
@@ -6,7 +7,7 @@ from django.http import HttpResponse
 class usuario(models.Model):
     nome = models.CharField(max_length=65, default=None)
     cpf = models.IntegerField(primary_key=True, default=None)
-    data_nasc = models.DateField(default=None)
+    data_nasc = models.DateField()
     senha = models.CharField(max_length=12, default=None)
 
     def __str__(self):
@@ -27,3 +28,6 @@ class agendamento(models.Model):
     cod_agend = models.IntegerField(primary_key=True, default=None)
     cpf = models.ForeignKey(usuario, on_delete=models.CASCADE)
     cod_und = models.ForeignKey(unidade, on_delete=models.CASCADE)
+
+
+# valodações
