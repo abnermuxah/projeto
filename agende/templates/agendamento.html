@@ -8,7 +8,8 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <div class="text-center text-lg-start mt-4 pt-2">
-  <h1>Tela de agendamento</h1>
+  <h1>Autogendamento</h1>
+  <form action="" method="get">{% csrf_token %} {{ login }}</form>
   <p>Bem vindo Rapaz</p>
   <form action="" method="post">
     {% csrf_token %} {{ agendamento }}
