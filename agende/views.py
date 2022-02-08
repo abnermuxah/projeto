@@ -12,27 +12,14 @@ import datetime
 
 
 def home(request):
+    login = Login(request.POST)
     if request.method == 'POST':
-        # login = Login(request.POST)
-        login = Login(request.POST)
-        # validação de usuario
-        # se CPF tiver cadastrado entrar e
-        # se Senha for igual a do CPF cadastrado entrar
-        # para pagina de agendamento
 
-        # validar CPF
-        cpf_rec = login.data['cpf']
-        senha_rec = login.data['senha']
-        login_valid = usuario.objects.values_list('cpf', 'senha')
-        i = 0
-        for i in range(len(login_valid)):
-            if (str(cpf_rec) == str(login_valid[i][0]) and str(senha_rec) == str(login_valid[i][1]) and len(cpf_rec) == 11):
-                return render(request, 'agendamento.html')
-        return HttpResponse("CPF ou Senha Incorretos")
-        # if (str(cpf_rec) in str(login_valid[0][0])):
-
+        return HttpResponse(login.data['cpf'])
     else:
         login = Login()
+
+    return render(request, 'home.html', {'login': login})
 
 
 def cadastro(request):
@@ -55,7 +42,7 @@ def cadastro(request):
     else:
         form = RegisterForm()
 
-    return render(request, 'agendamento.html', {'form': form})
+    return render(request, 'cadastro.html', {'form': form})
 
 
 def agendamento(request):
