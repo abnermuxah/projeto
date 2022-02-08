@@ -17,7 +17,7 @@ class usuario(models.Model):
 
 class unidade (models.Model):
     cod_unid = models.IntegerField(
-        max_length=10, default=None, primary_key=True)
+        default=None, primary_key=True)
     nome_unid = models.CharField(max_length=65, default=None)
 
     def __str__(self):
