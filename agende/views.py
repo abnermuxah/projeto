@@ -14,8 +14,15 @@ import datetime
 def home(request):
     login = Login(request.POST)
     if request.method == 'POST':
-
-        return HttpResponse(login.data['cpf'])
+        cpf_rec = login.data['cpf']
+        senha_rec = login.data['senha']
+        login_valid = usuario.objects.values_list('cpf', 'senha')
+        i = 0
+        while (i < len(login_valid)):
+            if str(cpf_rec) == str(login_valid[i][0]) and str(senha_rec) == str(login_valid[i][1]) and len(cpf_rec) == 11:
+                return render(request, 'agendamento.html')
+            i = i + 1
+        return HttpResponse("CPF Inválido ou Senha Incorreta, tente novamente")
     else:
         login = Login()
 
