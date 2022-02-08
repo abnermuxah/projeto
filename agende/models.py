@@ -6,7 +6,7 @@ from django.http import HttpResponse
 
 class usuario(models.Model):
     nome = models.CharField(max_length=65, default=None)
-    cpf = models.IntegerField(primary_key=True, default=None)
+    cpf = models.CharField(max_length=11, primary_key=True, default=None)
     data_nasc = models.DateField()
     senha = models.CharField(max_length=12, default=None)
     senha2 = models.CharField(max_length=12, default=None)
@@ -26,7 +26,6 @@ class unidade (models.Model):
 
 class agendamento(models.Model):
     data = models.DateTimeField()
-    cod_agend = models.IntegerField(primary_key=True, default=None)
     cpf = models.ForeignKey(usuario, on_delete=models.CASCADE)
     cod_und = models.ForeignKey(unidade, on_delete=models.CASCADE)
 

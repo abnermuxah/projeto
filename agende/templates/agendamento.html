@@ -1,1 +1,17 @@
-<h1>AGENDAMENTOOOO</h1>
+<link
+  href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  rel="stylesheet"
+  id="bootstrap-css"
+/>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="text-center text-lg-start mt-4 pt-2">
+  <h1>Tela de agendamento</h1>
+  <p>Bem vindo Rapaz</p>
+  <form action="" method="post">
+    {% csrf_token %} {{ agendamento }}
+    <input type="submit" value="AGENDAR" />
+  </form>
+</div>

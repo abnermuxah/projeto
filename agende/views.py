@@ -1,11 +1,12 @@
 from cmath import log
+from urllib.request import Request
 from django.template import RequestContext
 from django.core.exceptions import ValidationError
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from agende.forms import RegisterForm, Login
 from agende.models import usuario
-from .forms import RegisterForm
+from .forms import Agendamento, RegisterForm
 from django.contrib.auth import authenticate
 import datetime
 # Create your views here.
@@ -20,9 +21,11 @@ def home(request):
         i = 0
         while (i < len(login_valid)):
             if str(cpf_rec) == str(login_valid[i][0]) and str(senha_rec) == str(login_valid[i][1]) and len(cpf_rec) == 11:
-                return render(request, 'agendamento.html')
+                # return render(request, 'agendamento.html')
+                return redirect('/agendamento')
             i = i + 1
         return HttpResponse("CPF Inválido ou Senha Incorreta, tente novamente")
+
     else:
         login = Login()
 
@@ -41,7 +44,6 @@ def cadastro(request):
         if len(form.data['cpf']) == 11 and idade >= 18 and form.data['senha'] == form.data['senha2']:
             form.save()
             return HttpResponse('Cadastro efetuado com sucesso!')
-
         else:
             # return HttpResponse('Cadastro efetuado com sucesso!')
             # return HttpResponse(form.data['cpf'])
@@ -53,4 +55,9 @@ def cadastro(request):
 
 
 def agendamento(request):
-    return render(request, 'agendamento.html')
+    agendamento = Agendamento(request.POST)
+    if request.method == 'POST':
+        HttpResponse("Buc")
+    else:
+        agendamento = Agendamento()
+    return render(request, 'agendamento.html', {'agendamento': agendamento})
