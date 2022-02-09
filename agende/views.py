@@ -83,6 +83,9 @@ def agendamento(request):
         'data_nasc': data_nasc,
         'idade':  idade,
         'unidades': unidades
-
     }
+    if request.method == 'POST':
+        horario = request.POST.get('data')
+        return HttpResponse(horario)
+    # return HttpResponse(horario)
     return render(request, 'agendamento.html', context)
