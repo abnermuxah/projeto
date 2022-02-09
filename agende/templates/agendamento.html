@@ -17,12 +17,15 @@
   <br><br><br><br>
   <form action="" method="POST">
     {% csrf_token %} 
+    <p>Selecione uma unidade</p>
     <select>
       {% for unidades in unidades %}
           <option vaule="{{ unidades }}">{{ unidades }}</option>
       {% endfor %}
     </select>
-
+    <br><br>
+    <p>Selecione um horario</p>
+    <input type="datetime-local" vaule='data_agend'>
     <input type="submit" value="AGENDAR" />
   </form>
 </div>
