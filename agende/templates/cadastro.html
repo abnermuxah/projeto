@@ -12,7 +12,7 @@
   <form action="" method="post">
     {% csrf_token %} <!-- {{ form }} -->
     <input type="text" placeholder="Nome Completo" name="nome"> </imput>
-    <input type="number" placeholder="CPF Apenas Números" name="cpf"> </imput>
+    <input type="number" placeholder="CPF Apenas Números" name="cpf" maxlength="11"> </imput>
     <input type="date" placeholder="Data Nascimento" name="data_nasc"> </imput>
     <input type="password" placeholder="Senha" name="senha"> </imput>
     <input type="password" placeholder="Confirma Senha" name="senha2"> </imput>

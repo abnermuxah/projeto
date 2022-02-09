@@ -9,9 +9,19 @@
 
 <div class="text-center text-lg-start mt-4 pt-2">
   <h1>Autogendamento</h1>
-  <p>Bem vindo Rapaz</p>
+  <h1>Bem vindo, {{nome}}</h1>
+  <h5>Nascimento: {{data_nasc}} <h5>
+  <h5>Idade: {{idade}} anos <h5>
+  <h5> CPF : {{cpf}}<h5>
+  <input type="submit" value="SAIR" />
+  <br><br><br><br>
   <form action="" method="POST">
-    {% csrf_token %} {{ agendamento }}
+    {% csrf_token %} 
+    <select>
+      {% for unidades in unidades %}
+          <option vaule="{{ unidades }}">{{ unidades }}</option>
+      {% endfor %}
+    </select>
 
     <input type="submit" value="AGENDAR" />
   </form>

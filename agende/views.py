@@ -1,7 +1,12 @@
+from ast import Global
 from cmath import log
 from http.client import LineTooLong
 from posixpath import split
+from re import template
+from unittest import loader
+from urllib import response
 from urllib.request import Request
+from django import http
 from django.template import RequestContext
 from django.core.exceptions import ValidationError
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
@@ -21,7 +26,8 @@ def home(request):
         i = 0
         while (i < len(login_valid)):
             if cpf == str(login_valid[i][0]) and senha == str(login_valid[i][1]) and len(cpf) == 11:
-                # return render(request, 'agendamento.html')
+                # salvar o CPF p usar em outra função
+                request.session['cpf'] = cpf
                 return redirect('/agendamento')
             i = i + 1
         return HttpResponse("CPF Inválido ou Senha Incorreta, tente novamente")
@@ -51,6 +57,7 @@ def cadastro(request):
             cad = usuario(nome=nome, cpf=cpf, data_nasc=data_nasc,
                           senha=senha, senha2=senha2)
             cad.save()
+
             return HttpResponse("Usuario cadastrado com sucesso!")
 
     else:
@@ -58,7 +65,24 @@ def cadastro(request):
 
 
 def agendamento(request):
-    if request.method == 'GET':
-        x = request.GET.get('name')
-        return HttpResponse(x)
-        # return render(request, 'agendamento.html')
+    cpf = request.session['cpf']  # pegar o CPF da sessão
+    login_valid = usuario.objects.values_list(
+        'cpf', 'nome', 'data_nasc')
+    # pegar os dados do CPF logado
+    for i in range(len(login_valid)):
+        if cpf == login_valid[i][0]:
+            nome = login_valid[i][1]
+            data_nasc = str(login_valid[i][2])
+            idade = datetime.datetime.today().year - int(data_nasc[:4])
+    # unidades cadastradas
+    unidades = unidade.objects.values_list(
+        'nome_unid')
+    context = {
+        'cpf': cpf,
+        'nome': nome,
+        'data_nasc': data_nasc,
+        'idade':  idade,
+        'unidades': unidades
+
+    }
+    return render(request, 'agendamento.html', context)
