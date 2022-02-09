@@ -6,7 +6,7 @@ from django.http import HttpResponse
 
 class usuario(models.Model):
     nome = models.CharField(max_length=65, default=None)
-    cpf = models.CharField(max_length=11, primary_key=True, default=None)
+    cpf = models.CharField(max_length=11, primary_key=True)
     data_nasc = models.DateField()
     senha = models.CharField(max_length=12, default=None)
     senha2 = models.CharField(max_length=12, default=None)

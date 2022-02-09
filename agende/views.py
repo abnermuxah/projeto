@@ -1,63 +1,64 @@
 from cmath import log
+from http.client import LineTooLong
+from posixpath import split
 from urllib.request import Request
 from django.template import RequestContext
 from django.core.exceptions import ValidationError
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
-from agende.forms import RegisterForm, Login
-from agende.models import usuario
+from agende.forms import RegisterForm, Login, Agendamento
+from agende.models import usuario, unidade, agendamento
 from .forms import Agendamento, RegisterForm
-from django.contrib.auth import authenticate
 import datetime
 # Create your views here.
 
 
 def home(request):
-    login = Login(request.POST)
     if request.method == 'POST':
-        cpf_rec = login.data['cpf']
-        senha_rec = login.data['senha']
+        cpf = request.POST.get('cpf')
+        senha = request.POST.get('senha')
         login_valid = usuario.objects.values_list('cpf', 'senha')
         i = 0
         while (i < len(login_valid)):
-            if str(cpf_rec) == str(login_valid[i][0]) and str(senha_rec) == str(login_valid[i][1]) and len(cpf_rec) == 11:
+            if cpf == str(login_valid[i][0]) and senha == str(login_valid[i][1]) and len(cpf) == 11:
                 # return render(request, 'agendamento.html')
                 return redirect('/agendamento')
             i = i + 1
         return HttpResponse("CPF Inválido ou Senha Incorreta, tente novamente")
-
-    else:
-        login = Login()
-
-    return render(request, 'home.html', {'login': login})
+    return render(request, 'home.html')
 
 
 def cadastro(request):
     if request.method == 'POST':
-        form = RegisterForm(request.POST)
-
         # validação dos dados permitir > 18
+        nome = request.POST.get('nome')
+        cpf = request.POST.get('cpf')
         ano_atual = datetime.datetime.today().year
-        ano_nasc = form.data['data_nasc']
-        idade = ano_atual - int(ano_nasc[6:])
-
-        if len(form.data['cpf']) == 11 and idade >= 18 and form.data['senha'] == form.data['senha2']:
-            form.save()
-            return HttpResponse('Cadastro efetuado com sucesso!')
+        ano_nasc = int(request.POST.get('data_nasc')[:4])
+        data_nasc = request.POST.get('data_nasc')
+        ano_atual = int(datetime.datetime.today().year)
+        senha = request.POST.get('senha')
+        senha2 = request.POST.get('senha2')
+        idade = ano_atual - ano_nasc
+        login_valid = usuario.objects.values_list('cpf', 'senha')
+        if len(cpf) != 11 or idade <= 18 or senha != senha2:
+            return HttpResponse("Dados Inválidos : CPF ou Idade < 18 ou Senha Diferente")
         else:
-            # return HttpResponse('Cadastro efetuado com sucesso!')
-            # return HttpResponse(form.data['cpf'])
-            return HttpResponse('ERRO: CPF Inválido ou Menor de 18 anos ou Senha Inválida')
-    else:
-        form = RegisterForm()
+            # verificar se o CPF informado pertence a base de dados
+            for i in range(len(login_valid)):
+                if cpf == login_valid[i][0]:
+                    return HttpResponse("Ja existe esse CPF cadastrado")
+            cad = usuario(nome=nome, cpf=cpf, data_nasc=data_nasc,
+                          senha=senha, senha2=senha2)
+            cad.save()
+            return HttpResponse("Usuario cadastrado com sucesso!")
 
-    return render(request, 'cadastro.html', {'form': form})
+    else:
+        return render(request, 'cadastro.html')
 
 
 def agendamento(request):
-    agendamento = Agendamento(request.POST)
-    if request.method == 'POST':
-        HttpResponse("Buc")
-    else:
-        agendamento = Agendamento()
-    return render(request, 'agendamento.html', {'agendamento': agendamento})
+    if request.method == 'GET':
+        x = request.GET.get('name')
+        return HttpResponse(x)
+        # return render(request, 'agendamento.html')

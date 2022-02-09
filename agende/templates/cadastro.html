@@ -8,9 +8,15 @@
 <!------ Include the above in your HEAD tag ---------->
 <div class="text-center text-lg-start mt-4 pt-2">
   <h1>Autocadastro</h1>
-  {{ usuario.nome }}
+
   <form action="" method="post">
-    {% csrf_token %} {{ form }}
-    <input type="submit" value="CADASTRAR" />
+    {% csrf_token %} <!-- {{ form }} -->
+    <input type="text" placeholder="Nome Completo" name="nome"> </imput>
+    <input type="number" placeholder="CPF Apenas Números" name="cpf"> </imput>
+    <input type="date" placeholder="Data Nascimento" name="data_nasc"> </imput>
+    <input type="password" placeholder="Senha" name="senha"> </imput>
+    <input type="password" placeholder="Confirma Senha" name="senha2"> </imput>
+
+    <input type="submit"  value="CADASTRAR" />
   </form>
 </div>
