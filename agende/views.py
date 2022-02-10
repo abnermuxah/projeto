@@ -85,7 +85,7 @@ def agendamento(request):
     if request.method == 'POST':
         login_valid = agend.objects.values_list(
             'data', 'cpf', 'cod_und')
-        return HttpResponse(login_valid)
+        return HttpResponse(login_valid[0])
     # horario = request.POST.get('data')
     # return HttpResponse(horario[:4]) retorna o ano informado
     # if request.method == 'GET':
