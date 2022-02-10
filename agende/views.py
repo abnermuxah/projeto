@@ -1,8 +1,6 @@
-from ast import Global
-from cmath import log
 from http.client import LineTooLong
 from posixpath import split
-from re import template
+from re import A, template
 from unittest import loader
 from urllib import response
 from urllib.request import Request
@@ -11,10 +9,10 @@ from django.template import RequestContext
 from django.core.exceptions import ValidationError
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
-from agende.forms import RegisterForm, Login, Agendamento
-from agende.models import usuario, unidade, agendamento
-from .forms import Agendamento, RegisterForm
+from agende.models import usuario, unidade  # , agendamento
+from agende.models import agendamento as agend
 import datetime
+
 # Create your views here.
 
 
@@ -85,7 +83,12 @@ def agendamento(request):
         'unidades': unidades
     }
     if request.method == 'POST':
-        horario = request.POST.get('data')
-        return HttpResponse(horario)
+        login_valid = agend.objects.values_list(
+            'data', 'cpf', 'cod_und')
+        return HttpResponse(login_valid)
+    # horario = request.POST.get('data')
+    # return HttpResponse(horario[:4]) retorna o ano informado
+    # if request.method == 'GET':
     # return HttpResponse(horario)
+
     return render(request, 'agendamento.html', context)
