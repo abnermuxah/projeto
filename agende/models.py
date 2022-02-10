@@ -26,8 +26,10 @@ class unidade (models.Model):
 
 class agendamento(models.Model):
     data = models.DateTimeField()
-    cpf = models.ForeignKey(usuario, on_delete=models.CASCADE)
-    cod_und = models.ForeignKey(unidade, on_delete=models.CASCADE)
+    cpf = models.IntegerField(max_length=11,
+                              default=None)
+    cod_und = models.IntegerField(max_length=11,
+                                  default=None)
 
 
 # valodações

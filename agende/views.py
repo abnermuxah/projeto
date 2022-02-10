@@ -74,7 +74,7 @@ def agendamento(request):
             idade = datetime.datetime.today().year - int(data_nasc[:4])
     # unidades cadastradas
     unidades = unidade.objects.values_list(
-        'nome_unid')
+        'nome_unid', 'cod_unid')
     context = {
         'cpf': cpf,
         'nome': nome,
@@ -82,13 +82,16 @@ def agendamento(request):
         'idade':  idade,
         'unidades': unidades
     }
-    if request.method == 'POST':
-        login_valid = agend.objects.values_list(
-            'data', 'cpf', 'cod_und')
-        return HttpResponse(login_valid[0])
+
     # horario = request.POST.get('data')
     # return HttpResponse(horario[:4]) retorna o ano informado
     # if request.method == 'GET':
     # return HttpResponse(horario)
-
+    if request.method == 'POST':
+        login_valid = agend.objects.values_list(
+            'data', 'cpf', 'cod_und')
+        cad = agend(cpf=cpf, cod_und="77777",
+                    data=request.POST.get('data'))
+        cad.save()
+        return HttpResponse(cad)
     return render(request, 'agendamento.html', context)
