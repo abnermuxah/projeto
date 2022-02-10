@@ -18,7 +18,7 @@
 
 <div class="text-center text-lg-start mt-4 pt-2">
   <h1>Autogendamento</h1>
-  <h1>Bem vindo, {{nome}}</h1>
+  <h1>Bem vindo(a), {{nome}}</h1>
   <h5>Nascimento:  {{data_nasc}} <h5>
   <h5>Idade: {{idade}} anos <h5>
   <h5> CPF : {{cpf}}<h5>
@@ -27,7 +27,7 @@
   <form action="" method="POST">
     {% csrf_token %} 
     <p>Selecione uma unidade</p>
-    <select  name="selectedTask">
+    <select  name="unidade">
       {% for nome_unid, cod_unid in unidades %}
       <option name="{{ cod_unid }}" value="{{ cod_unid }}"> {{ cod_unid }} - {{ nome_unid }} </option>    
    {% endfor %}

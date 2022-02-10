@@ -88,11 +88,14 @@ def agendamento(request):
     # if request.method == 'GET':
     # return HttpResponse(horario)
     if request.method == 'POST':
-        login_valid = agend.objects.values_list(
+        agendados = agend.objects.values_list(
             'data', 'cpf', 'cod_und')
-        cad = agend(cpf=cpf, cod_und="6666",
+        cad = agend(cpf=cpf, cod_und=request.POST.get('unidade'),
                     data=request.POST.get('data'))
-        # cad.save()
-        x = request.POST.getlist('selectedTask')
-        return HttpResponse(x)
+
+        for i in range(len(agendados)):
+            if cpf == str(agendados[i][1]):
+                return HttpResponse("Não pode agendar Está Agendado ou Data Inválida")
+        cad.save()
+        return HttpResponse("Agendado com Sucesso")
     return render(request, 'agendamento.html', context)
