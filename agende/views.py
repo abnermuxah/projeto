@@ -64,6 +64,7 @@ def cadastro(request):
 
 def agendamento(request):
     cpf = request.session['cpf']  # pegar o CPF da sessão
+    data_rec = request.POST.get('data')
     login_valid = usuario.objects.values_list(
         'cpf', 'nome', 'data_nasc')
     # pegar os dados do CPF logado
@@ -91,11 +92,16 @@ def agendamento(request):
         agendados = agend.objects.values_list(
             'data', 'cpf', 'cod_und')
         cad = agend(cpf=cpf, cod_und=request.POST.get('unidade'),
-                    data=request.POST.get('data'))
+                    data=data_rec)
+        return HttpResponse(data_rec[14:16])
+    return render(request, 'agendamento.html', context)
 
+
+"""""
         for i in range(len(agendados)):
             if cpf == str(agendados[i][1]):
                 return HttpResponse("Não pode agendar Está Agendado ou Data Inválida")
         cad.save()
         return HttpResponse("Agendado com Sucesso")
-    return render(request, 'agendamento.html', context)
+
+"""
