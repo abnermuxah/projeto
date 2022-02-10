@@ -1,3 +1,12 @@
+<script>
+  function getSelectValue()
+  {
+      var selectedValue = document.getElementById("list").value;
+      console.log(selectedValue);
+  }
+  getSelectValue();
+
+</script>
 <link
   href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
   rel="stylesheet"
@@ -18,14 +27,20 @@
   <form action="" method="POST">
     {% csrf_token %} 
     <p>Selecione uma unidade</p>
-    <select>
-      {% for unidades in unidades %}
-      <option vaule="{{ unidades }}">{{ unidades }}</option>
-  {% endfor %}
+    <select  name="selectedTask">
+      {% for nome_unid, cod_unid in unidades %}
+      <option name="{{ cod_unid }}" value="{{ cod_unid }}"> {{ cod_unid }} - {{ nome_unid }} </option>    
+   {% endfor %}
+
+
     </select>
     <br><br>
     <p>Selecione um horario</p>
     <input type="datetime-local" name='data'>
     <input type="submit" value="AGENDAR" />
   </form>
+
+
+
+
 </div>

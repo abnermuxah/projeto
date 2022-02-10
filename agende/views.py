@@ -90,8 +90,9 @@ def agendamento(request):
     if request.method == 'POST':
         login_valid = agend.objects.values_list(
             'data', 'cpf', 'cod_und')
-        cad = agend(cpf=cpf, cod_und="77777",
+        cad = agend(cpf=cpf, cod_und="6666",
                     data=request.POST.get('data'))
-        cad.save()
-        return HttpResponse(cad)
+        # cad.save()
+        x = request.POST.getlist('selectedTask')
+        return HttpResponse(x)
     return render(request, 'agendamento.html', context)
