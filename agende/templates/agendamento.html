@@ -1,12 +1,3 @@
-<script>
-  function getSelectValue()
-  {
-      var selectedValue = document.getElementById("list").value;
-      console.log(selectedValue);
-  }
-  getSelectValue();
-
-</script>
 <link
   href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
   rel="stylesheet"
@@ -22,7 +13,9 @@
   <h5>Nascimento:  {{data_nasc}} <h5>
   <h5>Idade: {{idade}} anos <h5>
   <h5> CPF : {{cpf}}<h5>
+ 
   <input type="submit" value="SAIR" />
+
   <br><br><br><br>
   <form action="" method="POST">
     {% csrf_token %} 

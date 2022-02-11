@@ -100,4 +100,5 @@ def agendamento(request):
         # após passar todos os filtros e não parar em nenhum : salvar os dados
         cad.save()
         return HttpResponse("USUÁRIO AGENDADO  COM SUCESSO")
+
     return render(request, 'agendamento.html', context)
