@@ -12,6 +12,7 @@ from django.shortcuts import redirect, render
 from agende.models import usuario, unidade  # , agendamento
 from agende.models import agendamento as agend
 import datetime
+import calendar
 
 # Create your views here.
 
@@ -93,7 +94,10 @@ def agendamento(request):
             'data', 'cpf', 'cod_und')
         cad = agend(cpf=cpf, cod_und=request.POST.get('unidade'),
                     data=data_rec)
-        return HttpResponse(data_rec[14:16])
+        hora, minu = int(data_rec[11:13]), int(data_rec[14:16])
+        data_rec = datetime.date(
+            int(data_rec[:4]), int(data_rec[5:7]), int(data_rec[8:10]))
+        return HttpResponse(data_rec)
     return render(request, 'agendamento.html', context)
 
 
