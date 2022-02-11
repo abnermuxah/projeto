@@ -21,3 +21,7 @@ if dia_atual == 'Saturday' or dia_atual == 'Sunday':
     print("hoje éh sabado")
 else:
     print("hoje é dia de semana")
+
+
+for i in range(8, 12):
+    print(i)

@@ -100,15 +100,15 @@ def agendamento(request):
         # se o dia for hoje | sabado ou domingo => não cadastrar
         if (data_rec <= datetime.date.today()) or (calendar.day_name[data_rec.weekday()] == 'Saturday') or (calendar.day_name[data_rec.weekday()] == 'Sunday') or (hora < 8) or (hora > 12):
             return HttpResponse("Não é possível cadastrar dias anteriories, dias atuais nem sabados e domingos, e horario diferente de 8 as 12.")
-        return HttpResponse(data_rec)
-    return render(request, 'agendamento.html', context)
-
-
-"""""
         for i in range(len(agendados)):
             if cpf == str(agendados[i][1]):
                 return HttpResponse("Não pode agendar Está Agendado ou Data Inválida")
         cad.save()
         return HttpResponse("Agendado com Sucesso")
+    return render(request, 'agendamento.html', context)
+
+
+"""""
+        
 
 """
