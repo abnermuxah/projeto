@@ -97,6 +97,9 @@ def agendamento(request):
         hora, minu = int(data_rec[11:13]), int(data_rec[14:16])
         data_rec = datetime.date(
             int(data_rec[:4]), int(data_rec[5:7]), int(data_rec[8:10]))
+        # se o dia for hoje | sabado ou domingo => não cadastrar
+        if (data_rec <= datetime.date.today()) or (calendar.day_name[data_rec.weekday()] == 'Saturday') or (calendar.day_name[data_rec.weekday()] == 'Sunday') or (hora < 8) or (hora > 12):
+            return HttpResponse("Não é possível cadastrar dias anteriories, dias atuais nem sabados e domingos, e horario diferente de 8 as 12.")
         return HttpResponse(data_rec)
     return render(request, 'agendamento.html', context)
 
