@@ -1,15 +1,6 @@
-from http.client import LineTooLong
-from posixpath import split
-from re import A, template
-from unittest import loader
-from urllib import response
-from urllib.request import Request
-from django import http
-from django.template import RequestContext
-from django.core.exceptions import ValidationError
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from agende.models import usuario, unidade  # , agendamento
+from agende.models import usuario, unidade
 from agende.models import agendamento as agend
 import datetime
 import calendar
@@ -84,11 +75,6 @@ def agendamento(request):
         'idade':  idade,
         'unidades': unidades
     }
-
-    # horario = request.POST.get('data')
-    # return HttpResponse(horario[:4]) retorna o ano informado
-    # if request.method == 'GET':
-    # return HttpResponse(horario)
     if request.method == 'POST':
         agendados = agend.objects.values_list(
             'data', 'cpf', 'cod_und')
@@ -97,18 +83,21 @@ def agendamento(request):
         hora, minu = int(data_rec[11:13]), int(data_rec[14:16])
         data_rec = datetime.date(
             int(data_rec[:4]), int(data_rec[5:7]), int(data_rec[8:10]))
-        # se o dia for hoje | sabado ou domingo => não cadastrar
-        if (data_rec <= datetime.date.today()) or (calendar.day_name[data_rec.weekday()] == 'Saturday') or (calendar.day_name[data_rec.weekday()] == 'Sunday') or (hora < 8) or (hora > 12):
-            return HttpResponse("Não é possível cadastrar dias anteriories, dias atuais nem sabados e domingos, e horario diferente de 8 as 12.")
         for i in range(len(agendados)):
             if cpf == str(agendados[i][1]):
-                return HttpResponse("Não pode agendar Está Agendado ou Data Inválida")
+                return HttpResponse("Este CPF já está agendado")
+        # se o dia não for hoje | e não for sabado ou domingo => cadastrar
+        if (data_rec <= datetime.date.today()) or (calendar.day_name[data_rec.weekday()] == 'Saturday') or (calendar.day_name[data_rec.weekday()] == 'Sunday') or (hora < 8) or (hora > 12):
+            return HttpResponse("ESTA DATA NÃO É PERMITIDA")
+        # se for no mesmo dia mesmo horario e mesmo minuto não permitir
+        for i in range(len(agendados)):
+            if data_rec == agendados[i][0].date():
+                hora_bd = int(agendados[i][0].strftime("%H"))
+                if hora == hora_bd:
+                    minu_db = int(agendados[i][0].strftime("%M"))
+                    if minu in range(minu_db, minu_db+11) or minu+10 in range(minu_db, minu_db+11) or minu > 49:
+                        return HttpResponse("HORARIO OCUPADO OU NÃO PERMITIDO")
+        # após passar todos os filtros e não parar em nenhum : salvar os dados
         cad.save()
-        return HttpResponse("Agendado com Sucesso")
+        return HttpResponse("USUÁRIO AGENDADO  COM SUCESSO")
     return render(request, 'agendamento.html', context)
-
-
-"""""
-        
-
-"""

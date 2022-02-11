@@ -23,5 +23,9 @@ else:
     print("hoje é dia de semana")
 
 
-for i in range(8, 12):
-    print(i)
+min_cad = 30
+min_info = 25
+if min_cad <= min_info+10 <= min_cad+10 or min_info > 49:
+    print("houve coliuzao")
+else:
+    print("Pode cadastrar meu chapa")

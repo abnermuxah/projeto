@@ -1,7 +1,4 @@
-from datetime import datetime
-from email.policy import default
 from django.db import models
-from django.http import HttpResponse
 
 
 class usuario(models.Model):
@@ -30,6 +27,3 @@ class agendamento(models.Model):
                               default=None)
     cod_und = models.IntegerField(max_length=11,
                                   default=None)
-
-
-# valodações
