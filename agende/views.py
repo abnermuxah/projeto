@@ -20,7 +20,7 @@ def home(request):
                 request.session['cpf'] = cpf
                 return redirect('/agendamento')
             i = i + 1
-        return HttpResponse("CPF Inválido ou Senha Incorreta, tente novamente")
+        return HttpResponse('<p style="font-size:50px; color:#900C3F;"><b> CPF ou Senha Inválida. Tente novamente.</b></p>')
     return render(request, 'home.html')
 
 
@@ -38,17 +38,17 @@ def cadastro(request):
         idade = ano_atual - ano_nasc
         login_valid = usuario.objects.values_list('cpf', 'senha')
         if len(cpf) != 11 or idade <= 18 or senha != senha2:
-            return HttpResponse("CPF inválido | Idade menor que 18 anos | Senha diferente")
+            return HttpResponse('<p style="font-size:50px; color:#900C3F;"><b> CPF inválido | Senha inválida | Data Inválida </b></p>')
         else:
             # verificar se o CPF informado pertence a base de dados
             for i in range(len(login_valid)):
                 if cpf == login_valid[i][0]:
-                    return HttpResponse("Ja existe esse CPF cadastrado")
+                    return HttpResponse('<p style="font-size:50px; color:#900C3F;"><b> Já existe este CPF cadastrado </b></p>')
             cad = usuario(nome=nome, cpf=cpf, data_nasc=data_nasc,
                           senha=senha, senha2=senha2)
             cad.save()
 
-            return HttpResponse("Usuario cadastrado com sucesso!")
+            return HttpResponse('<p style="font-size:50px; color:##28B463;"><b> Usuário cadastrado com sucesso!!! </b></p>')
 
     else:
         return render(request, 'cadastro.html')
@@ -85,7 +85,7 @@ def agendamento(request):
             int(data_rec[:4]), int(data_rec[5:7]), int(data_rec[8:10]))
         for i in range(len(agendados)):
             if cpf == str(agendados[i][1]):
-                return HttpResponse("Este CPF já está agendado")
+                return HttpResponse('<p style="font-size:50px; color:#900C3F;"><b> Este CPF já está cadastrado</b></p>')
         # se o dia não for hoje | e não for sabado ou domingo => cadastrar
         if (data_rec <= datetime.date.today()) or (calendar.day_name[data_rec.weekday()] == 'Saturday') or (calendar.day_name[data_rec.weekday()] == 'Sunday') or (hora < 8) or (hora > 12):
             return HttpResponse("ESTA DATA NÃO É PERMITIDA")
@@ -96,9 +96,15 @@ def agendamento(request):
                 if hora == hora_bd:
                     minu_db = int(agendados[i][0].strftime("%M"))
                     if minu in range(minu_db, minu_db+11) or minu+10 in range(minu_db, minu_db+11) or minu > 49:
-                        return HttpResponse("HORARIO OCUPADO OU NÃO PERMITIDO")
+                        return HttpResponse('<p style="font-size:50px; color:#900C3F;"><b>Horario indisponível</b></p>')
         # após passar todos os filtros e não parar em nenhum : salvar os dados
         cad.save()
-        return HttpResponse("USUÁRIO AGENDADO  COM SUCESSO")
+        # return HttpResponse("USUÁRIO AGENDADO  COM SUCESSO")
+        return redirect('/listagem')
 
     return render(request, 'agendamento.html', context)
+
+
+def listagem(request):
+    if request.method == 'GET':
+        return render(request, 'listagem.html')
