@@ -3,19 +3,100 @@
   rel="stylesheet"
   id="bootstrap-css"
 />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-<div class="text-center text-lg-start mt-4 pt-2">
-  <h1>Autocadastro</h1>
 
+
+
+
+<section>
+  
   <form action="" method="post">
-    {% csrf_token %} <!-- {{ form }} -->
-    <input type="text" placeholder="Nome Completo" name="nome"> </imput>
-    <input type="number" placeholder="CPF Apenas Números" name="cpf" maxlength="11"> </imput>
-    <input type="date" placeholder="Data Nascimento" name="data_nasc"> </imput>
-    <input type="password" placeholder="Senha" name="senha"> </imput>
-    <input type="password" placeholder="Confirma Senha" name="senha2"> </imput>
-    <input type="submit"  value="CADASTRAR" />
-  </form>
-</div>
+  {% csrf_token %} <!-- {{ form }} -->
+  <div class="container">
+    
+    <div class="alert alert-warning text-center my-4">
+      <b>Importante!</b>  Não é permitido cadastrar menores de 18 anos. 
+    </div>
+    
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-8 col-xl-6">
+        <div class="row">
+          <div class="col text-center">
+        
+            <h1>Autocadastro</h1>
+            <hr>
+          </div>
+        </div>
+        <div class="row align-items-center">
+          
+          <div class="col mt-4">
+            <div class="input-group flex-nowrap">
+              <i class="input-group-text bi bi-person-square"></i>
+              <input type="text" class="form-control" placeholder="Nome Completo" aria-label="Username" aria-describedby="addon-wrapping" name="nome">
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-center mt-4">
+          <div class="col">
+            <div class="input-group flex-nowrap">
+              <i class="input-group-text bi bi-123"></i>
+              <input type="text" class="form-control" placeholder="CPF (Apenas Números)" aria-label="Username" aria-describedby="addon-wrapping" name="cpf">
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col mt-4">
+          <label>
+            <div class="input-group flex-nowrap ">
+              <i class="input-group-text bi bi-calendar-date"></i>
+              <input class="form-control" type="text" value="Data de nascimento" aria-label="readonly input example" readonly>
+            </div>
+             
+             
+            </label>
+            <input type="date" class="form-control" name="data_nasc" >
+          </div>
+        </div>
+       
+        <div class="row align-items-center mt-4">
+          <div class="col">
+            <div class="input-group flex-nowrap ">
+              <i class="input-group-text bi bi-key"></i>
+              <input type="password" class="form-control" placeholder="Senha" name="senha">
+            </div>
+           
+          </div>
+          <div class="col">
+            <div class="input-group flex-nowrap ">
+              <i class="input-group-text bi bi-key-fill"></i>
+              <input type="password" class="form-control" placeholder="Confirmar senha" name="senha2">
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-start mt-4">
+          <div class="col">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" checked>
+                Eu li e aceito os <a href="#">termos de uso</a>
+              </label>
+            </div>
+
+            <button class="btn btn-success mt-4">CADASTRAR</button>
+            <a href="{% url 'home' %}" class="btn btn-secondary mt-4" >VOLTAR</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <hr>
+    <footer>
+    <p class="h6">LAIS/HUOL - UFRN - Laboratório de Inovação Tecnológica em Saúde | Av. Nilo Peçanha, 620 - 59012-300 Petrópolis - Natal/RN - Brasil </p>
+    </footer>
+    <hr>
+  </div>
+</section>

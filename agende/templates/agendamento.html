@@ -1,39 +1,54 @@
+<head>
 <link
   href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
   rel="stylesheet"
   id="bootstrap-css"
 />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
+</head>
 
 <div class="text-center text-lg-start mt-4 pt-2">
-  <h1>Autogendamento</h1>
-  <h1>Bem vindo(a), {{nome}}</h1>
-  <h5>Nascimento:  {{data_nasc}} <h5>
-  <h5>Idade: {{idade}} anos <h5>
-  <h5> CPF : {{cpf}}<h5>
- 
-  <input type="submit" value="SAIR" />
-
-  <br><br><br><br>
-  <form action="" method="POST">
-    {% csrf_token %} 
-    <p>Selecione uma unidade</p>
-    <select  name="unidade">
+<form action="" method="POST">
+  <div class="card container ">
+    <div class="card-header">
+      <p class="h4" > Bem vindo(a), {{nome}} </p>
+    </div>
+    <div class="card-body ">
+      <p class="h6">Seus dados pessoais:</p>
+      <p class="h6">Nasc.:  {{data_nasc}} , idade:  {{idade}} anos</p>
+      <p class="h6">CPF : {{cpf}}</p>
+      <a href="{% url 'home' %}" class=" btn btn-primary">SAIR</a>  
+      <br><br>
+      <div class="card-header h4">
+        Autoagendamento
+      </div>
+      <br>
+      <p class="h5"> Selecione uma unidade </p>
+      <select name="unidade">
       {% for nome_unid, cod_unid in unidades %}
-      <option name="{{ cod_unid }}" value="{{ cod_unid }}"> {{ cod_unid }} - {{ nome_unid }} </option>    
-   {% endfor %}
-
-
+      <option  name="{{ cod_unid }}" value="{{ cod_unid }}"> {{ cod_unid }} - {{ nome_unid }} </option>    
+    {% endfor %}
     </select>
     <br><br>
-    <p>Selecione um horario</p>
+    <p class="h5"> Selecione uma data e horario </p>
     <input type="datetime-local" name='data' >
-    <input type="submit" value="AGENDAR" />
+    <br><br>
+    <p>Os horarios permitidos: são de seg-sex de 8:00 as 12:00 e só pode agendar datas futuras, e o paciente só tem um agendamento por vez</p>
+
+    <input type="submit" class="btn btn-success" value="AGENDAR" />
+    <br><br>
+    </div>
   </form>
-
-
-
-
+    <hr>
+    <p class="h6">LAIS/HUOL - UFRN - Laboratório de Inovação Tecnológica em Saúde | Av. Nilo Peçanha, 620 - 59012-300 Petrópolis - Natal/RN - Brasil</p>
+    <br>
+  </div>
 </div>
+
+
+

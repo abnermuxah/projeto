@@ -38,7 +38,7 @@ def cadastro(request):
         idade = ano_atual - ano_nasc
         login_valid = usuario.objects.values_list('cpf', 'senha')
         if len(cpf) != 11 or idade <= 18 or senha != senha2:
-            return HttpResponse("Dados Inválidos : CPF ou Idade < 18 ou Senha Diferente")
+            return HttpResponse("CPF inválido | Idade menor que 18 anos | Senha diferente")
         else:
             # verificar se o CPF informado pertence a base de dados
             for i in range(len(login_valid)):
