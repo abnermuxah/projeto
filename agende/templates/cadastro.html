@@ -18,7 +18,7 @@
   {% csrf_token %} <!-- {{ form }} -->
   <div class="container">
     
-    <div class="alert alert-warning text-center my-4">
+    <div class="alert alert-warning text-center my-2">
       <b>Importante!</b>  Não é permitido cadastrar menores de 18 anos. 
     </div>
     
@@ -72,7 +72,6 @@
           </div>
           <div class="col">
             <div class="input-group flex-nowrap ">
-              <i class="input-group-text bi bi-key-fill"></i>
               <input type="password" class="form-control" placeholder="Confirmar senha" name="senha2">
             </div>
           </div>
@@ -81,18 +80,24 @@
           <div class="col">
             <div class="form-check">
               <label class="form-check-label">
+                
                 <input type="checkbox" class="form-check-input" checked>
                 Eu li e aceito os <a href="#">termos de uso</a>
               </label>
             </div>
 
-            <button class="btn btn-success mt-4">CADASTRAR</button>
-            <a href="{% url 'home' %}" class="btn btn-secondary mt-4" >VOLTAR</a>
+            <button class="btn btn-success mt-4">
+              CADASTRAR
+            </button>
+
+            <a href="{% url 'home' %}" class="btn btn-secondary mt-4" >
+              VOLTAR
+            </a>
           </div>
         </div>
       </div>
     </div>
-    <br>
+  
     <hr>
     <footer>
     <p class="h6">LAIS/HUOL - UFRN - Laboratório de Inovação Tecnológica em Saúde | Av. Nilo Peçanha, 620 - 59012-300 Petrópolis - Natal/RN - Brasil </p>
@@ -100,3 +105,5 @@
     <hr>
   </div>
 </section>
+
+
